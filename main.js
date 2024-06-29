@@ -9,13 +9,29 @@ function onSubmit(evt) {
   evt.preventDefault();
 
   const { text } = evt.currentTarget.elements;
+  const userText = text.value;
 
-  if (text.value === "" || text.value.trim() === "")
+  if (userText === "" || userText.trim() === "")
     return alert("Enter your text please");
 
-  const markup = `<p>${text.value}</p>`;
+  const textArray = userText.split("");
 
-  appRef.insertAdjacentHTML("beforeend", markup);
+  const markup = textArray
+    .map(
+      (letter, idx) =>
+        `
+    <span
+      data-span=${idx}
+      >
+      ${letter}
+    </span>`
+    )
+    .join("");
+
+  const divRef = document.querySelector("#text");
+  if (divRef) divRef.remove();
+
+  appRef.insertAdjacentHTML("beforeend", `<div id="text">${markup}</div>`);
 
   evt.currentTarget.reset();
 }
