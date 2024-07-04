@@ -14,7 +14,9 @@ function onSubmit(evt) {
   if (userText === "" || userText.trim() === "")
     return alert("Enter your text please");
 
-  const textArray = userText.split("");
+  const textArray = userText.trim().split("");
+  const textArrayLength = textArray.length;
+  console.log(textArrayLength);
 
   const markup = textArray
     .map(
@@ -33,18 +35,27 @@ function onSubmit(evt) {
 
   appRef.insertAdjacentHTML("beforeend", `<div id="text">${markup}</div>`);
 
-  const letterRef = document.querySelector("#span0");
   const divTextRef = document.querySelector("#text");
 
-  divTextRef.addEventListener("dragstart", onDrag);
+  divTextRef.addEventListener("dragstart", () => onDrag(textArrayLength));
+  console.log(window.getSelection());
   evt.currentTarget.reset();
 }
 
-function onDrag(evt) {
+function onDrag(textArrayLength) {
   const selObj = window.getSelection();
+
+  const amountOfLetters = selObj.toString().trim().split(" ").length;
+
+  // Check user select only entered text
+  if (amountOfLetters > textArrayLength)
+    return alert("Select only entered text");
+
+  // console.log(window.getSelection());
   let lettersId = [];
 
   const firstRangeObj = selObj.getRangeAt(0);
+  console.log(firstRangeObj);
 
   // First element id selected by user
   // console.log(selObj.getRangeAt(0).startContainer.parentElement.id);
@@ -56,7 +67,6 @@ function onDrag(evt) {
   // and so on
 
   // Count amount of user selected letters
-  const amountOfLetters = selObj.toString().trim().split(" ").length;
   console.log(amountOfLetters);
 
   const firstContainer = firstRangeObj.startContainer.parentElement;

@@ -32,8 +32,8 @@ input {
 span {
   font-size: 26px;
   line-height: 1.62;
-  letter-spacing: 0.06em;
   text-transform: uppercase;
+  margin: 0 10px 0 10px;
 }
 
 #app {
