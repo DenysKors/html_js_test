@@ -21,7 +21,7 @@ function onSubmit(evt) {
       (letter, idx) =>
         `
     <span
-      data-span=${idx}
+    id=span${idx}
       >
       ${letter}
     </span>`
@@ -33,5 +33,41 @@ function onSubmit(evt) {
 
   appRef.insertAdjacentHTML("beforeend", `<div id="text">${markup}</div>`);
 
+  const letterRef = document.querySelector("#span0");
+  const divTextRef = document.querySelector("#text");
+
+  divTextRef.addEventListener("dragstart", onDrag);
   evt.currentTarget.reset();
+}
+
+function onDrag(evt) {
+  const selObj = window.getSelection();
+  let lettersId = [];
+
+  const firstRangeObj = selObj.getRangeAt(0);
+
+  // First element id selected by user
+  // console.log(selObj.getRangeAt(0).startContainer.parentElement.id);
+
+  // Second element id selected by user
+  // console.log(
+  //   selObj.getRangeAt(0).startContainer.parentElement.nextElementSibling.id
+  // );
+  // and so on
+
+  // Count amount of user selected letters
+  const amountOfLetters = selObj.toString().trim().split(" ").length;
+  console.log(amountOfLetters);
+
+  const firstContainer = firstRangeObj.startContainer.parentElement;
+  let id = firstContainer.id;
+  let nextContainer = firstContainer;
+
+  for (let i = 1; i <= amountOfLetters; i += 1) {
+    lettersId.push(id);
+    if (i === amountOfLetters) break;
+    nextContainer = nextContainer.nextElementSibling;
+    id = nextContainer.id;
+  }
+  console.log(lettersId);
 }
