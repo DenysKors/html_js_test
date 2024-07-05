@@ -16,7 +16,6 @@ function onSubmit(evt) {
 
   const textArray = userText.trim().split("");
   const textArrayLength = textArray.length;
-  console.log(textArrayLength);
 
   const markup = textArray
     .map(
@@ -38,7 +37,7 @@ function onSubmit(evt) {
   const divTextRef = document.querySelector("#text");
 
   divTextRef.addEventListener("dragstart", () => onDrag(textArrayLength));
-  console.log(window.getSelection());
+
   evt.currentTarget.reset();
 }
 
@@ -55,7 +54,7 @@ function onDrag(textArrayLength) {
   let lettersId = [];
 
   const firstRangeObj = selObj.getRangeAt(0);
-  console.log(firstRangeObj);
+  // console.log(firstRangeObj);
 
   // First element id selected by user
   // console.log(selObj.getRangeAt(0).startContainer.parentElement.id);
@@ -66,8 +65,8 @@ function onDrag(textArrayLength) {
   // );
   // and so on
 
-  // Count amount of user selected letters
-  console.log(amountOfLetters);
+  // Count amount of user's selected letters
+  // console.log(amountOfLetters);
 
   const firstContainer = firstRangeObj.startContainer.parentElement;
   let id = firstContainer.id;
@@ -79,5 +78,26 @@ function onDrag(textArrayLength) {
     nextContainer = nextContainer.nextElementSibling;
     id = nextContainer.id;
   }
-  console.log(lettersId);
+
+  lettersControl(lettersId);
+}
+
+function lettersControl(lettersId) {
+  lettersId.forEach((span) => {
+    document.getElementById(span).classList.add("letter_move");
+  });
+
+  document.addEventListener("mousemove", (evt) => {
+    lettersId.forEach((span, idx) => {
+      let offsetLeft = 0;
+      if (idx === 0) {
+        offsetLeft = evt.clientX;
+      } else {
+        offsetLeft = Number(`${idx}${0}`) + evt.clientX;
+      }
+      console.log(offsetLeft);
+      document.getElementById(span).style.top = `${evt.clientY}px`;
+      document.getElementById(span).style.left = `${offsetLeft}px`;
+    });
+  });
 }
