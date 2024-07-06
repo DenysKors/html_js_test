@@ -30,6 +30,7 @@ function onSubmit(evt) {
     .join("");
 
   const divRef = document.querySelector("#text");
+
   if (divRef) divRef.remove();
 
   appRef.insertAdjacentHTML("beforeend", `<div id="text">${markup}</div>`);
@@ -93,7 +94,7 @@ function lettersControl(lettersId) {
       if (idx === 0) {
         offsetLeft = evt.clientX;
       } else {
-        offsetLeft = Number(`${idx}${0}`) + evt.clientX;
+        offsetLeft = idx * 10 + evt.clientX + 35 * idx;
       }
       console.log(offsetLeft);
       document.getElementById(span).style.top = `${evt.clientY}px`;
