@@ -37,15 +37,20 @@ function onSubmit(evt) {
 
   const divTextRef = document.querySelector("#text");
 
-  divTextRef.addEventListener("mousedown", (evt) =>
-    onDrag(evt, textArrayLength)
+  divTextRef.addEventListener("click", (evt) =>
+    onSpanClick(evt, textArrayLength)
   );
 
   evt.currentTarget.reset();
 }
 
-function onDrag(evt, textArrayLength) {
-  if (evt.target.nodeName !== "SPAN" || window.getSelection().type === "Caret")
+function onSpanClick(evt, textArrayLength) {
+  if (
+    evt.target.nodeName !== "SPAN" ||
+    window.getSelection().type === "Caret" ||
+    window.getSelection().type === "None" ||
+    evt.detail > 1
+  )
     return;
 
   const selObj = window.getSelection();
@@ -88,13 +93,26 @@ function onDrag(evt, textArrayLength) {
   lettersControl(lettersId);
 }
 
+// function addLocation(evt, lettersId) {
+//   let offsetLeft = 0;
+
+//   lettersId.forEach((span, idx) => {
+//     if (idx === 0) {
+//       offsetLeft = evt.clientX;
+//     } else {
+//       offsetLeft = idx * 10 + evt.clientX + 35 * idx;
+//     }
+//     document.getElementById(span).style.top = `${evt.clientY}px`;
+//     document.getElementById(span).style.left = `${offsetLeft}px`;
+//   });
+// }
+
 function lettersControl(lettersId) {
   lettersId.forEach((span) => {
     document.getElementById(span).classList.add("letter_move");
   });
 
   let offsetLeft = 0;
-
   const addLocation = (evt) => {
     lettersId.forEach((span, idx) => {
       if (idx === 0) {
@@ -109,7 +127,10 @@ function lettersControl(lettersId) {
 
   document.addEventListener("mousemove", addLocation);
 
-  document.addEventListener("mouseup", () => {
-    document.removeEventListener("mousemove", addLocation);
+  document.addEventListener("dblclick", function stopControl(evt) {
+    if (evt.target.nodeName !== "SPAN" && evt.detail > 1) {
+      document.removeEventListener("mousemove", addLocation);
+      this.removeEventListener("dblclick", stopControl);
+    }
   });
 }
