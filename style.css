@@ -22,7 +22,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  position: relative;
+  overflow: hidden;
 }
 
 input {
@@ -70,4 +70,5 @@ button:focus-visible {
 .letter_move {
   position: absolute;
   z-index: 10;
+  color: crimson;
 }

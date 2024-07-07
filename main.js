@@ -37,12 +37,17 @@ function onSubmit(evt) {
 
   const divTextRef = document.querySelector("#text");
 
-  divTextRef.addEventListener("dragstart", () => onDrag(textArrayLength));
+  divTextRef.addEventListener("mousedown", (evt) =>
+    onDrag(evt, textArrayLength)
+  );
 
   evt.currentTarget.reset();
 }
 
-function onDrag(textArrayLength) {
+function onDrag(evt, textArrayLength) {
+  if (evt.target.nodeName !== "SPAN" || window.getSelection().type === "Caret")
+    return;
+
   const selObj = window.getSelection();
 
   const amountOfLetters = selObj.toString().trim().split(" ").length;
@@ -88,17 +93,23 @@ function lettersControl(lettersId) {
     document.getElementById(span).classList.add("letter_move");
   });
 
-  document.addEventListener("mousemove", (evt) => {
+  let offsetLeft = 0;
+
+  const addLocation = (evt) => {
     lettersId.forEach((span, idx) => {
-      let offsetLeft = 0;
       if (idx === 0) {
         offsetLeft = evt.clientX;
       } else {
         offsetLeft = idx * 10 + evt.clientX + 35 * idx;
       }
-      console.log(offsetLeft);
       document.getElementById(span).style.top = `${evt.clientY}px`;
       document.getElementById(span).style.left = `${offsetLeft}px`;
     });
+  };
+
+  document.addEventListener("mousemove", addLocation);
+
+  document.addEventListener("mouseup", () => {
+    document.removeEventListener("mousemove", addLocation);
   });
 }
