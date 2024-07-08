@@ -62,7 +62,7 @@ function onSpanClick(evt, textArrayLength) {
     return alert("Select only entered text");
 
   // console.log(window.getSelection());
-  let lettersId = [];
+  let spanId = [];
 
   const firstRangeObj = selObj.getRangeAt(0);
   // console.log(firstRangeObj);
@@ -84,42 +84,43 @@ function onSpanClick(evt, textArrayLength) {
   let nextContainer = firstContainer;
 
   for (let i = 1; i <= amountOfLetters; i += 1) {
-    lettersId.push(id);
+    spanId.push(id);
     if (i === amountOfLetters) break;
     nextContainer = nextContainer.nextElementSibling;
     id = nextContainer.id;
   }
 
-  lettersControl(lettersId);
+  lettersControl(spanId);
+
+  let offsetLeft = 0;
+
+  spanId.forEach((span, idx) => {
+    if (idx === 0) {
+      offsetLeft = evt.clientX;
+    } else {
+      offsetLeft = idx * 10 + evt.clientX + 35 * idx;
+    }
+
+    document.getElementById(span).style.top = `${evt.clientY}px`;
+    document.getElementById(span).style.left = `${offsetLeft}px`;
+  });
 }
 
-// function addLocation(evt, lettersId) {
-//   let offsetLeft = 0;
-
-//   lettersId.forEach((span, idx) => {
-//     if (idx === 0) {
-//       offsetLeft = evt.clientX;
-//     } else {
-//       offsetLeft = idx * 10 + evt.clientX + 35 * idx;
-//     }
-//     document.getElementById(span).style.top = `${evt.clientY}px`;
-//     document.getElementById(span).style.left = `${offsetLeft}px`;
-//   });
-// }
-
-function lettersControl(lettersId) {
-  lettersId.forEach((span) => {
+function lettersControl(spanId) {
+  spanId.forEach((span) => {
     document.getElementById(span).classList.add("letter_move");
   });
 
-  let offsetLeft = 0;
   const addLocation = (evt) => {
-    lettersId.forEach((span, idx) => {
+    let offsetLeft = 0;
+
+    spanId.forEach((span, idx) => {
       if (idx === 0) {
         offsetLeft = evt.clientX;
       } else {
         offsetLeft = idx * 10 + evt.clientX + 35 * idx;
       }
+
       document.getElementById(span).style.top = `${evt.clientY}px`;
       document.getElementById(span).style.left = `${offsetLeft}px`;
     });
