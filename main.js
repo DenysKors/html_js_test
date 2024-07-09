@@ -33,9 +33,7 @@ function onSubmit(evt) {
 
   if (divRef) divRef.remove();
 
-  appRef.insertAdjacentHTML("beforeend", `<div id="text">${markup}</div>`);
-
-  const divTextRef = document.querySelector("#text");
+  appRef.insertAdjacentHTML("beforeend", `<div id=text >${markup}</div>`);
 
   let spanId = [];
   if (spanId.length > 0) spanId.length = 0;

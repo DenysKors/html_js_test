@@ -4,8 +4,8 @@
 4. Implement two possibilities of moving letters to any place:
    - by one letter
    - several highlighted letters
-5. Hold down the mouse button and drag creating a rectangle. All symbols that entered this rectangle must become highlighted. Highlighted symbols must change their color.
-   The possibility to select several letters by clicking while holding down the Ctrl key with a change in the colos of the active ones. Deselect on repeated click.
+5. Hold down the mouse button and drag creating a rectangle. All symbols that entered this rectangle must become highlighted. Highlighted symbols must change their color. Deselect on repeated click.
+   The possibility to select several letters by clicking while holding down the Ctrl key with a change in the colos of the active ones.
 6. Depending on point 4. implement movement 4A or 4B according to the following algorithms:
    - user pinches any letter(s) in the line and it is moved by the cursor to any place on the screen
    - after moving, the letter sets the last position of the cursor
