@@ -38,8 +38,9 @@ function onSubmit(evt) {
   const divTextRef = document.querySelector("#text");
 
   let spanId = [];
+  if (spanId.length > 0) spanId.length = 0;
 
-  divTextRef.addEventListener("click", (evt) =>
+  document.addEventListener("click", (evt) =>
     onSpanClick(evt, textArrayLength, spanId)
   );
 
@@ -50,70 +51,17 @@ function onSpanClick(evt, textArrayLength, spanId) {
   if (evt.ctrlKey && evt.target.nodeName === "SPAN" && evt.detail < 2) {
     onCtrlPress(evt, spanId);
   } else if (
-    !evt.ctrlKey ||
-    evt.target.nodeName === "SPAN" ||
-    window.getSelection().type !== "Caret" ||
-    window.getSelection().type !== "None" ||
+    !evt.ctrlKey &&
+    evt.target.nodeName === "SPAN" &&
+    window.getSelection().type !== "Caret" &&
+    window.getSelection().type !== "None" &&
     evt.detail < 2
   ) {
     onSelectedRange(evt, textArrayLength, spanId);
   }
-
-  // const selObj = window.getSelection();
-
-  // const amountOfLetters = selObj.toString().trim().split(" ").length;
-
-  // Check user select only entered text
-  // if (amountOfLetters > textArrayLength)
-  //   return alert("Select only entered text");
-
-  // console.log(window.getSelection());
-  // let spanId = [];
-
-  // const firstRangeObj = selObj.getRangeAt(0);
-  // console.log(firstRangeObj);
-
-  // First element id selected by user
-  // console.log(selObj.getRangeAt(0).startContainer.parentElement.id);
-
-  // Second element id selected by user
-  // console.log(
-  //   selObj.getRangeAt(0).startContainer.parentElement.nextElementSibling.id
-  // );
-  // and so on
-
-  // Count amount of user's selected letters
-  // console.log(amountOfLetters);
-
-  // const firstContainer = firstRangeObj.startContainer.parentElement;
-  // let id = firstContainer.id;
-  // let nextContainer = firstContainer;
-
-  // for (let i = 1; i <= amountOfLetters; i += 1) {
-  //   spanId.push(id);
-  //   if (i === amountOfLetters) break;
-  //   nextContainer = nextContainer.nextElementSibling;
-  //   id = nextContainer.id;
-  // }
-
-  // lettersControl(spanId);
-
-  // let offsetLeft = 0;
-
-  // spanId.forEach((span, idx) => {
-  //   if (idx === 0) {
-  //     offsetLeft = evt.clientX;
-  //   } else {
-  //     offsetLeft = idx * 10 + evt.clientX + 35 * idx;
-  //   }
-
-  //   document.getElementById(span).style.top = `${evt.clientY}px`;
-  //   document.getElementById(span).style.left = `${offsetLeft}px`;
-  // });
 }
 
 function onSelectedRange(evt, textArrayLength, spanId) {
-  spanId = [];
   const selObj = window.getSelection();
 
   const amountOfLetters = selObj.toString().trim().split(" ").length;
@@ -139,7 +87,7 @@ function onSelectedRange(evt, textArrayLength, spanId) {
   const firstContainer = firstRangeObj.startContainer.parentElement;
   let id = firstContainer.id;
   let nextContainer = firstContainer;
-  console.log(spanId);
+
   for (let i = 1; i <= amountOfLetters; i += 1) {
     spanId.push(id);
     if (i === amountOfLetters) break;
@@ -187,6 +135,7 @@ function lettersControl(spanId) {
 
   document.addEventListener("dblclick", function stopControl(evt) {
     if (evt.target.nodeName !== "SPAN" && evt.detail > 1) {
+      spanId.length = 0;
       document.removeEventListener("mousemove", addLocation);
       this.removeEventListener("dblclick", stopControl);
     }

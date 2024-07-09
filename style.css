@@ -25,6 +25,14 @@ body {
   overflow: hidden;
 }
 
+h3 {
+  user-select: none;
+}
+
+label {
+  user-select: none;
+}
+
 input {
   padding: 8px;
   font: inherit;
@@ -46,6 +54,7 @@ button {
   font-family: inherit;
   background-color: #f9f9f9;
   cursor: pointer;
+  user-select: none;
   transition: border-color 0.25s;
 }
 button:hover {
