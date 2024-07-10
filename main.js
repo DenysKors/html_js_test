@@ -1,6 +1,6 @@
 import "./style.css";
 
-const appRef = document.querySelector("#app");
+const divFormRef = document.querySelector(".text_form");
 const btnRef = document.querySelector("form");
 
 btnRef.addEventListener("submit", onSubmit);
@@ -33,7 +33,7 @@ function onSubmit(evt) {
 
   if (divRef) divRef.remove();
 
-  appRef.insertAdjacentHTML("beforeend", `<div id=text >${markup}</div>`);
+  divFormRef.insertAdjacentHTML("beforeend", `<div id=text >${markup}</div>`);
 
   let spanId = [];
   if (spanId.length > 0) spanId.length = 0;

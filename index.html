@@ -7,25 +7,45 @@
     <title>Vite App</title>
   </head>
   <body>
+    <h1>Vanilla JS task</h1>
     <div id="app">
-      <h3>1. Enter your text here and apply it</h3>
-      <form>
-        <label>
-          Random text:
-          <input
-            type="text"
-            name="text"
-            placeholder="Place for text"
-            maxlength="12"
-          />
-        </label>
-        <button type="submit">Apply</button>
-      </form>
-      <h3>2. Then select any letter(-s) below and click on it</h3>
-      <h3
-        >3. Move cursor with letter(-s) attached, double click to set a new
-        place</h3
-      >
+      <div class="task_descr">
+        <ol>
+          <li> Enter your text and apply it </li>
+          <li>
+            Select any letter(-s) below:
+            <ul>
+              <li
+                >by selecting an area with a range of letters and single
+                clicking on one of them</li
+              >
+              <li
+                >by holding down the control key and single clicking on the
+                required letter(-s)</li
+              >
+            </ul>
+          </li>
+          <li>
+            Move cursor with letter(-s) attached, double click to set a new
+            location
+          </li>
+          <li> Repeat if necessary </li>
+        </ol>
+      </div>
+      <div class="text_form">
+        <form>
+          <label>
+            Random text:
+            <input
+              type="text"
+              name="text"
+              placeholder="Place for text"
+              maxlength="12"
+            />
+          </label>
+          <button type="submit">Apply</button>
+        </form>
+      </div>
     </div>
     <script type="module" src="/main.js"></script>
   </body>
