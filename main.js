@@ -51,8 +51,7 @@ function onSpanClick(evt, textArrayLength, spanId) {
   } else if (
     !evt.ctrlKey &&
     evt.target.nodeName === "SPAN" &&
-    window.getSelection().type !== "Caret" &&
-    window.getSelection().type !== "None" &&
+    window.getSelection().type === "Range" &&
     evt.detail < 2
   ) {
     onSelectedRange(evt, textArrayLength, spanId);
@@ -92,7 +91,7 @@ function onSelectedRange(evt, textArrayLength, spanId) {
     nextContainer = nextContainer.nextElementSibling;
     id = nextContainer.id;
   }
-
+  console.log(spanId);
   lettersControl(spanId);
 
   let offsetLeft = 0;
