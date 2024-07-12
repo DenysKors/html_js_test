@@ -1,4 +1,5 @@
 import "./style.css";
+import onSpanClick from "./spanControl";
 
 const divFormRef = document.querySelector(".text_form");
 const btnRef = document.querySelector("form");
@@ -45,115 +46,115 @@ function onSubmit(evt) {
   evt.currentTarget.reset();
 }
 
-function onSpanClick(evt, textArrayLength, spanId) {
-  if (evt.ctrlKey && evt.target.nodeName === "SPAN" && evt.detail < 2) {
-    onCtrlPress(evt, spanId);
-  } else if (
-    !evt.ctrlKey &&
-    evt.target.nodeName === "SPAN" &&
-    window.getSelection().type === "Range" &&
-    evt.detail < 2
-  ) {
-    onSelectedRange(evt, textArrayLength, spanId);
-  }
-}
+// function onSpanClick(evt, textArrayLength, spanId) {
+//   if (evt.ctrlKey && evt.target.nodeName === "SPAN" && evt.detail < 2) {
+//     onCtrlPress(evt, spanId);
+//   } else if (
+//     !evt.ctrlKey &&
+//     evt.target.nodeName === "SPAN" &&
+//     window.getSelection().type === "Range" &&
+//     evt.detail < 2
+//   ) {
+//     onSelectedRange(evt, textArrayLength, spanId);
+//   }
+// }
 
-function onSelectedRange(evt, textArrayLength, spanId) {
-  const selObj = window.getSelection();
+// function onSelectedRange(evt, textArrayLength, spanId) {
+//   const selObj = window.getSelection();
 
-  const amountOfLetters = selObj.toString().trim().split(" ").length;
+//   const amountOfLetters = selObj.toString().trim().split(" ").length;
 
-  // Check user select only entered text
-  if (amountOfLetters > textArrayLength)
-    return alert("Select only entered text");
+//   // Check user select only entered text
+//   if (amountOfLetters > textArrayLength)
+//     return alert("Select only entered text");
 
-  const firstRangeObj = selObj.getRangeAt(0);
+//   const firstRangeObj = selObj.getRangeAt(0);
 
-  // First element id selected by user
-  // console.log(selObj.getRangeAt(0).startContainer.parentElement.id);
+//   // First element id selected by user
+//   // console.log(selObj.getRangeAt(0).startContainer.parentElement.id);
 
-  // Second element id selected by user
-  // console.log(
-  //   selObj.getRangeAt(0).startContainer.parentElement.nextElementSibling.id
-  // );
-  // and so on
+//   // Second element id selected by user
+//   // console.log(
+//   //   selObj.getRangeAt(0).startContainer.parentElement.nextElementSibling.id
+//   // );
+//   // and so on
 
-  // Count amount of user's selected letters
-  // console.log(amountOfLetters);
+//   // Count amount of user's selected letters
+//   // console.log(amountOfLetters);
 
-  const firstContainer = firstRangeObj.startContainer.parentElement;
-  let id = firstContainer.id;
-  let nextContainer = firstContainer;
+//   const firstContainer = firstRangeObj.startContainer.parentElement;
+//   let id = firstContainer.id;
+//   let nextContainer = firstContainer;
 
-  for (let i = 1; i <= amountOfLetters; i += 1) {
-    spanId.push(id);
-    if (i === amountOfLetters) break;
-    nextContainer = nextContainer.nextElementSibling;
-    id = nextContainer.id;
-  }
-  console.log(spanId);
-  lettersControl(spanId);
+//   for (let i = 1; i <= amountOfLetters; i += 1) {
+//     spanId.push(id);
+//     if (i === amountOfLetters) break;
+//     nextContainer = nextContainer.nextElementSibling;
+//     id = nextContainer.id;
+//   }
 
-  let offsetLeft = 0;
+//   lettersControl(spanId);
 
-  spanId.forEach((span, idx) => {
-    if (idx === 0) {
-      offsetLeft = evt.clientX;
-    } else {
-      offsetLeft = idx * 10 + evt.clientX + 35 * idx;
-    }
+//   let offsetLeft = 0;
 
-    document.getElementById(span).style.top = `${evt.clientY}px`;
-    document.getElementById(span).style.left = `${offsetLeft}px`;
-  });
-}
+//   spanId.forEach((span, idx) => {
+//     if (idx === 0) {
+//       offsetLeft = evt.clientX;
+//     } else {
+//       offsetLeft = idx * 10 + evt.clientX + 35 * idx;
+//     }
 
-function lettersControl(spanId) {
-  spanId.forEach((span) => {
-    document.getElementById(span).classList.add("letter_move");
-  });
+//     document.getElementById(span).style.top = `${evt.clientY}px`;
+//     document.getElementById(span).style.left = `${offsetLeft}px`;
+//   });
+// }
 
-  const addLocation = (evt) => {
-    let offsetLeft = 0;
+// function lettersControl(spanId) {
+//   spanId.forEach((span) => {
+//     document.getElementById(span).classList.add("letter_move");
+//   });
 
-    spanId.forEach((span, idx) => {
-      if (idx === 0) {
-        offsetLeft = evt.clientX;
-      } else {
-        offsetLeft = idx * 10 + evt.clientX + 35 * idx;
-      }
+//   const addLocation = (evt) => {
+//     let offsetLeft = 0;
 
-      document.getElementById(span).style.top = `${evt.clientY}px`;
-      document.getElementById(span).style.left = `${offsetLeft}px`;
-    });
-  };
+//     spanId.forEach((span, idx) => {
+//       if (idx === 0) {
+//         offsetLeft = evt.clientX;
+//       } else {
+//         offsetLeft = idx * 10 + evt.clientX + 35 * idx;
+//       }
 
-  document.addEventListener("mousemove", addLocation);
+//       document.getElementById(span).style.top = `${evt.clientY}px`;
+//       document.getElementById(span).style.left = `${offsetLeft}px`;
+//     });
+//   };
 
-  document.addEventListener("dblclick", function stopControl(evt) {
-    if (evt.target.nodeName !== "SPAN" && evt.detail > 1) {
-      spanId.length = 0;
-      document.removeEventListener("mousemove", addLocation);
-      this.removeEventListener("dblclick", stopControl);
-    }
-  });
-}
+//   document.addEventListener("mousemove", addLocation);
 
-function onCtrlPress(evt, spanId) {
-  spanId.push(evt.target.id);
+//   document.addEventListener("dblclick", function stopControl(evt) {
+//     if (evt.target.nodeName !== "SPAN" && evt.detail > 1) {
+//       spanId.length = 0;
+//       document.removeEventListener("mousemove", addLocation);
+//       this.removeEventListener("dblclick", stopControl);
+//     }
+//   });
+// }
 
-  lettersControl(spanId);
+// function onCtrlPress(evt, spanId) {
+//   spanId.push(evt.target.id);
 
-  let offsetLeft = 0;
+//   lettersControl(spanId);
 
-  spanId.forEach((span, idx) => {
-    if (idx === 0) {
-      offsetLeft = evt.clientX;
-    } else {
-      offsetLeft = idx * 10 + evt.clientX + 35 * idx;
-    }
+//   let offsetLeft = 0;
 
-    document.getElementById(span).style.top = `${evt.clientY}px`;
-    document.getElementById(span).style.left = `${offsetLeft}px`;
-  });
-}
+//   spanId.forEach((span, idx) => {
+//     if (idx === 0) {
+//       offsetLeft = evt.clientX;
+//     } else {
+//       offsetLeft = idx * 10 + evt.clientX + 35 * idx;
+//     }
+
+//     document.getElementById(span).style.top = `${evt.clientY}px`;
+//     document.getElementById(span).style.left = `${offsetLeft}px`;
+//   });
+// }
